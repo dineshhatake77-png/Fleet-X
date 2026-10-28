@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with individual role (Owner or Driver) and assigned fleet context",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The Firebase Authentication UID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's registered email address"
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name",
+          "maxLength": 100
+        },
+        "role": {
+          "type": "string",
+          "enum": ["Owner", "Driver", "Admin", "Fleet Manager", "Dispatcher", "Maintenance Manager"],
+          "description": "The assigned user role determining permission tier"
+        },
+        "company": {
+          "type": "string",
+          "description": "Fleet company or organization name",
+          "maxLength": 120
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL to profile picture or Google avatar"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number"
+        },
+        "assignedVehicleId": {
+          "type": "string",
+          "description": "Unique vehicle ID assigned to this driver"
+        },
+        "assignedVehicleReg": {
+          "type": "string",
+          "description": "License plate registration of assigned vehicle"
+        },
+        "driverLicense": {
+          "type": "string",
+          "description": "Commercial Driver License (CDL) number"
+        },
+        "dutyStatus": {
+          "type": "string",
+          "enum": ["available", "driving", "break", "offline"],
+          "description": "Live driver duty status"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user account was provisioned"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of most recent authentication"
+        }
+      },
+      "required": ["id", "email", "name", "role", "createdAt"]
+    },
+    "FleetLog": {
+      "title": "FleetLog",
+      "description": "Audit log for user logins and critical fleet events",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Log record ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the user performing the action"
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Email of user"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action performed (e.g. login_google, role_change, vehicle_dispatch)"
+        },
+        "details": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of event"
+        }
+      },
+      "required": ["id", "userId", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual user accounts with Owner or Driver credentials and fleet assignments"
+    },
+    "/fleet_logs/{logId}": {
+      "schema": "FleetLog",
+      "description": "Persistent audit trails for authentication and fleet security actions"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "FleetX - Autonomous Fleet Management System",
+  "description": "Production-style Fleet Management System with real-time GPS tracking, predictive maintenance, driver safety scoring, fuel analytics, and route optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
